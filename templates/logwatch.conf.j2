@@ -19,3 +19,6 @@ MailFrom = {{ logwatch_mailfrom }}
 {% if logwatch_range is defined %}
 Range = {{ logwatch_range }}
 {% endif %}
+{% if logwatch_detail is defined %}
+Detail = {{ logwatch_detail }}
+{% endif %}
