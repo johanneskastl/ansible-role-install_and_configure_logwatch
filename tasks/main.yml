@@ -1,0 +1,55 @@
+---
+# install_and_configure_logwatch/tasks/main.yml
+
+- name: 'install logwatch package'
+  package:
+    name: 'logwatch'
+    state: 'present'
+  when:
+    - 'ansible_os_family != "openSUSE MicroOS"'
+
+- name: 'Check if logwatch is installed on openSUSE MicroOS'
+  command:
+  args:
+    cmd: 'rpm -q logwatch'
+    warn: false
+  when: 'ansible_os_family == "openSUSE MicroOS"'
+  register: 'is_logwatch_installed'
+  check_mode: false
+  changed_when: false
+
+- debug:
+    var: 'is_logwatch_installed'
+  when: 'ansible_os_family == "openSUSE MicroOS"'
+
+- name: 'Install logwatch using transactional updates on openSUSE MicroOS'
+  command:
+  args:
+    cmd: '/usr/sbin/transactional-update pkg install logwatch'
+  register: 'transactional_update_result'
+  changed_when: '"zypper: nothing to update" not in transactional_update_result.stdout'
+  when: 'ansible_os_family == "openSUSE MicroOS" and "logwatch" not in is_logwatch_installed.stdout'
+  notify:
+   - 'Reboot'
+   - 'Wait for the machine(s) to be ready again'
+
+# trigger reboot when using transactional updates
+- meta: flush_handlers
+
+- name: 'Create /etc/logwatch/conf/logwatch.conf'
+  template:
+    src: 'logwatch.conf.j2'
+    dest: '/etc/logwatch/conf/logwatch.conf'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+
+- name: 'Enable Logwatch timer on openSUSE MicroOS or on SLES15.* / openSUSE 15.* or higher'
+  systemd:
+    name: 'logwatch.timer'
+    state: 'started'
+    enabled: 'yes'
+  when: '
+    ansible_os_family == "openSUSE MicroOS" or
+    (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
+    '
