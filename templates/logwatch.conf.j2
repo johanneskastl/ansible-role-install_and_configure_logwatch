@@ -3,3 +3,7 @@
 #
 
 # Local configuration options go here (defaults are in /usr/share/logwatch/default.conf/logwatch.conf)
+
+{% if logwatch_output is defined %}
+Output = {{ logwatch_output }}
+{% endif %}
