@@ -31,12 +31,22 @@ Dependencies
 
 None
 
-Example Playbook
+Example Playbook installing logwatch while keeping the default settings
 ----------------
 
     - hosts: servers
       roles:
-        - { role: 'johanneskastl.install_and_configure_logwatch' }
+        - role: 'johanneskastl.install_and_configure_logwatch'
+
+Example Playbook installing logwatch and sending the report via mail
+----------------
+
+    - hosts: servers
+      roles:
+        - role: 'johanneskastl.install_and_configure_logwatch'
+          vars:
+            logwatch_output: 'mail'
+            logwatch_format: 'text'
 
 License
 -------
