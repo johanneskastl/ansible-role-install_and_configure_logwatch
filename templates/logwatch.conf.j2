@@ -10,3 +10,6 @@ Output = {{ logwatch_output }}
 {% if logwatch_format is defined %}
 Format = {{ logwatch_format }}
 {% endif %}
+{% if logwatch_mailto is defined %}
+MailTo = {{ logwatch_mailto }}
+{% endif %}
