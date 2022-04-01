@@ -7,3 +7,6 @@
 {% if logwatch_output is defined %}
 Output = {{ logwatch_output }}
 {% endif %}
+{% if logwatch_format is defined %}
+Format = {{ logwatch_format }}
+{% endif %}
