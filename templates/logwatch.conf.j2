@@ -22,3 +22,6 @@ Range = {{ logwatch_range }}
 {% if logwatch_detail is defined %}
 Detail = {{ logwatch_detail }}
 {% endif %}
+{% if logwatch_mailer is defined %}
+mailer = {{ logwatch_mailer }}
+{% endif %}
