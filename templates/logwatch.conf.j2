@@ -13,3 +13,6 @@ Format = {{ logwatch_format }}
 {% if logwatch_mailto is defined %}
 MailTo = {{ logwatch_mailto }}
 {% endif %}
+{% if logwatch_mailfrom is defined %}
+MailFrom = {{ logwatch_mailfrom }}
+{% endif %}
