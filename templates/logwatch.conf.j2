@@ -16,3 +16,6 @@ MailTo = {{ logwatch_mailto }}
 {% if logwatch_mailfrom is defined %}
 MailFrom = {{ logwatch_mailfrom }}
 {% endif %}
+{% if logwatch_range is defined %}
+Range = {{ logwatch_range }}
+{% endif %}
