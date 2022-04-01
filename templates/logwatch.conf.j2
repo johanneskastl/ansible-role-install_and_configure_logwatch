@@ -28,3 +28,6 @@ Detail = {{ logwatch_detail }}
 {% if logwatch_mailer is defined %}
 mailer = {{ logwatch_mailer }}
 {% endif %}
+{% if logwatch_tmpdir is defined %}
+TmpDir = {{ logwatch_tmpdir }}
+{% endif %}
