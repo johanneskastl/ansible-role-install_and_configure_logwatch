@@ -1,5 +1,6 @@
 galaxy_info:
   role_name: 'install_and_configure_logwatch'
+  namespace: 'johanneskastl'
   author: 'Johannes Kastl'
   description: 'Install and configure Logwatch'
   company: 'B1 Systems GmbH'
