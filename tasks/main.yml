@@ -18,7 +18,8 @@
   check_mode: false
   changed_when: false
 
-- debug:
+- name: 'output variable is_logwatch_installed'
+  debug:
     var: 'is_logwatch_installed'
   when: 'ansible_os_family == "openSUSE MicroOS"'
 
@@ -30,11 +31,11 @@
   changed_when: '"zypper: nothing to update" not in transactional_update_result.stdout'
   when: 'ansible_os_family == "openSUSE MicroOS" and "logwatch" not in is_logwatch_installed.stdout'
   notify:
-   - 'Reboot'
-   - 'Wait for the machine(s) to be ready again'
+    - 'Reboot'
+    - 'Wait for the machine(s) to be ready again'
 
-# trigger reboot when using transactional updates
-- meta: flush_handlers
+- name: trigger reboot when using transactional updates
+  meta: flush_handlers
 
 - name: 'Create /etc/logwatch/conf/logwatch.conf'
   template:
