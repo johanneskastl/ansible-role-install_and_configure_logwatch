@@ -1,7 +1,7 @@
 ---
 # install_and_configure_logwatch/tasks/main.yml
 
-- name: 'install logwatch package'
+- name: 'Install logwatch package'
   ansible.builtin.package:
     name: 'logwatch'
     state: 'present'
@@ -17,7 +17,7 @@
   check_mode: false
   changed_when: false
 
-- name: 'output variable is_logwatch_installed'
+- name: 'Output variable is_logwatch_installed'
   ansible.builtin.debug:
     var: 'is_logwatch_installed'
   when: 'ansible_os_family == "openSUSE MicroOS"'
@@ -33,7 +33,7 @@
     - 'Reboot'
     - 'Wait for the machine(s) to be ready again'
 
-- name: trigger reboot when using transactional updates
+- name: 'Trigger reboot when using transactional updates'
   ansible.builtin.meta: flush_handlers
 
 - name: 'Create /etc/logwatch/conf/logwatch.conf'
