@@ -1,34 +1,19 @@
 ---
 # install_and_configure_logwatch/tasks/main.yml
 
-- name: 'Install logwatch package'
+- name: 'Install logwatch package without reboot'
   ansible.builtin.package:
     name: 'logwatch'
     state: 'present'
   when:
     - 'ansible_os_family != "openSUSE MicroOS"'
 
-- name: 'Check if logwatch is installed on openSUSE MicroOS'
-  ansible.builtin.command:
-  args:
-    cmd: 'rpm -q logwatch'
-  when: 'ansible_os_family == "openSUSE MicroOS"'
-  register: 'is_logwatch_installed'
-  check_mode: false
-  changed_when: false
-
-- name: 'Output variable is_logwatch_installed'
-  ansible.builtin.debug:
-    var: 'is_logwatch_installed'
-  when: 'ansible_os_family == "openSUSE MicroOS"'
-
-- name: 'Install logwatch using transactional updates on openSUSE MicroOS'
-  ansible.builtin.command:
-  args:
-    cmd: '/usr/sbin/transactional-update pkg install logwatch'
-  register: 'transactional_update_result'
-  changed_when: '"zypper: nothing to update" not in transactional_update_result.stdout'
-  when: 'ansible_os_family == "openSUSE MicroOS" and "logwatch" not in is_logwatch_installed.stdout'
+- name: 'Install logwatch package with reboot on openSUSE MicroOS'
+  ansible.builtin.package:
+    name: 'logwatch'
+    state: 'present'
+  when:
+    - 'ansible_os_family == "openSUSE MicroOS"'
   notify:
     - 'Reboot'
     - 'Wait for the machine(s) to be ready again'
