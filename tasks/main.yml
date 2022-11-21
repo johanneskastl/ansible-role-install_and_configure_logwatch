@@ -12,7 +12,6 @@
   command:
   args:
     cmd: 'rpm -q logwatch'
-    warn: false
   when: 'ansible_os_family == "openSUSE MicroOS"'
   register: 'is_logwatch_installed'
   check_mode: false
