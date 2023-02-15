@@ -38,7 +38,8 @@
     name: 'logwatch.timer'
     state: 'started'
     enabled: 'yes'
-  when: '
-    ansible_os_family == "openSUSE MicroOS" or
-    (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
-    '
+  when:
+    - '
+      ansible_os_family == "openSUSE MicroOS" or
+      (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
+      '
