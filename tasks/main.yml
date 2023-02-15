@@ -7,13 +7,17 @@
     state: 'present'
   when:
     - 'ansible_os_family != "openSUSE MicroOS"'
+    - 'ansible_os_family != "openSUSE Leap Micro"'
 
-- name: 'Install logwatch package with reboot on openSUSE MicroOS'
+- name: 'Install logwatch package with reboot on openSUSE MicroOS or openSUSE Leap Micro'
   ansible.builtin.package:
     name: 'logwatch'
     state: 'present'
   when:
-    - 'ansible_os_family == "openSUSE MicroOS"'
+    - '
+      ansible_os_family == "openSUSE MicroOS"
+      or ansible_os_family == "openSUSE Leap Micro"
+      '
   notify:
     - 'Reboot'
     - 'Wait for the machine(s) to be ready again'
