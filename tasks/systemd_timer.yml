@@ -1,6 +1,36 @@
 ---
 # install_and_configure_logwatch/tasks/systemd_timer.yml
 
+- name: 'Check if /usr/lib/systemd/system/logwatch.timer exists'
+  ansible.builtin.stat:
+    path: '/usr/lib/systemd/system/logwatch.timer'
+  register: usr_lib_systemd_system_logwatch_timer
+
+- name: 'Create the logwatch systemd.timer'
+  ansible.builtin.template:
+    src: 'logwatch.timer.j2'
+    dest: '/etc/systemd/system/logwatch.timer'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when:
+    - 'not usr_lib_systemd_system_logwatch_timer.stat.exists'
+
+- name: 'Check if /usr/lib/systemd/system/logwatch.service exists'
+  ansible.builtin.stat:
+    path: '/usr/lib/systemd/system/logwatch.service'
+  register: usr_lib_systemd_system_logwatch_service
+
+- name: 'Create the logwatch systemd.service'
+  ansible.builtin.template:
+    src: 'logwatch.service.j2'
+    dest: '/etc/systemd/system/logwatch.service'
+    owner: 'root'
+    group: 'root'
+    mode: '0644'
+  when:
+    - 'not usr_lib_systemd_system_logwatch_service.stat.exists'
+
 #
 # Enable the timer
 #
