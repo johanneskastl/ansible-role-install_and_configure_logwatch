@@ -1,14 +1,11 @@
 ---
 # install_and_configure_logwatch/tasks/systemd_timer.yml
 
+#
+# Enable the timer
+#
 - name: 'Enable Logwatch timer on openSUSE MicroOS, openSUSE Leap Micro, SLES15.* / openSUSE 15.* or higher'
   ansible.builtin.systemd:
     name: 'logwatch.timer'
     state: 'started'
     enabled: 'yes'
-  when:
-    - '
-      ansible_os_family == "openSUSE MicroOS"
-      or ansible_os_family == "openSUSE Leap Micro"
-      or (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
-      '

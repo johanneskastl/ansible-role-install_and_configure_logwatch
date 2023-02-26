@@ -33,5 +33,11 @@
     group: 'root'
     mode: '0644'
 
-- name: 'Run tasks from systemd_timer.yml'
+- name: 'Run tasks from systemd_timer.yml on openSUSE/SUSE machines'
   ansible.builtin.include_tasks: systemd_timer.yml
+  when:
+    - '
+      ansible_os_family == "openSUSE MicroOS"
+      or ansible_os_family == "openSUSE Leap Micro"
+      or (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
+      '
