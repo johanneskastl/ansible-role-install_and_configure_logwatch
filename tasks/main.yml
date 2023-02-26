@@ -36,8 +36,10 @@
 - name: 'Run tasks from systemd_timer.yml on openSUSE/SUSE machines'
   ansible.builtin.include_tasks: systemd_timer.yml
   when:
+    # openSUSE Leap / Leap Micro are still using cron
+    # Debian 11 is still using cron
+    # RHEL8/Rocky8/AlmaLinux8 are still using cron
     - '
       ansible_os_family == "openSUSE MicroOS"
-      or ansible_os_family == "openSUSE Leap Micro"
-      or (ansible_os_family == "Suse" and ansible_distribution_major_version >= "15")
+      or ansible_distribution == "openSUSE Tumbleweed"
       '
