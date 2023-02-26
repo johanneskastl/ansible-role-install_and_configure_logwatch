@@ -1,0 +1,25 @@
+[Unit]
+Description=Log analyzer and reporter
+Documentation=man:logwatch(8) man:logwatch.conf(5)
+Before=logrotate.service
+
+[Service]
+# added automatically, for details please see
+# https://en.opensuse.org/openSUSE:Security_Features#Systemd_hardening_effort
+ProtectSystem=full
+ProtectHome=true
+PrivateDevices=true
+ProtectHostname=true
+ProtectClock=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictRealtime=true
+# end of automatic additions 
+Type=oneshot
+# This first EnvironmentFile has the Logwatch default variables
+EnvironmentFile=-/usr/share/logwatch/default.conf/systemd.conf
+# This second EnvironmentFile is meant for system-specific
+# customization of variables, including overriding the defaults
+EnvironmentFile=-/etc/logwatch/conf/systemd.conf
+ExecStart=/usr/sbin/logwatch $LOGWATCH_OPTIONS
