@@ -23,6 +23,16 @@
     - 'Reboot'
     - 'Wait for the machine(s) to be ready again'
 
+- name: 'Install logwatch on Fedora/RedHat CoreOS with a reboot'
+  community.general.rpm_ostree_pkg:
+    name: 'logwatch'
+    state: 'present'
+  when:
+    - 'ansible_os_family == "RedHat" and ansible_pkg_mgr == "atomic_container"'
+  notify:
+    - 'Reboot'
+    - 'Wait for the machine(s) to be ready again'
+
 - name: 'Trigger reboot when using transactional updates'
   ansible.builtin.meta: flush_handlers
 
