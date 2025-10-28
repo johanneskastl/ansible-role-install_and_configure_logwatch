@@ -7,6 +7,7 @@
     state: 'present'
   when:
     - 'not ansible_os_family == "openSUSE MicroOS"'
+    - 'not ansible_distribution == "openSUSE MicroOS"'
     - 'not ansible_os_family == "openSUSE Leap Micro"'
     - 'not ansible_pkg_mgr == "atomic_container"'
 
@@ -17,6 +18,7 @@
   when:
     - '
       ansible_os_family == "openSUSE MicroOS"
+      or ansible_distribution == "openSUSE MicroOS"
       or ansible_os_family == "openSUSE Leap Micro"
       '
   notify:
@@ -52,5 +54,6 @@
     # RHEL8/Rocky8/AlmaLinux8 are still using cron
     - '
       ansible_os_family == "openSUSE MicroOS"
+      or ansible_os_family == "openSUSE MicroOS"
       or ansible_distribution == "openSUSE Tumbleweed"
       '
